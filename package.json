@@ -1,0 +1,40 @@
+{
+  "name": "nature-remo-mcp-server",
+  "version": "0.0.1",
+  "description": "MCP Server for using the Nature Remo API",
+  "license": "MIT",
+  "author": "noboru-i",
+  "homepage": "https://github.com/noboru-i/nature-remo-mcp-server#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noboru-i/nature-remo-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/noboru-i/nature-remo-mcp-server/issues"
+  },
+  "type": "module",
+  "bin": {
+    "mcp-server-nature-remo": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && shx chmod +x dist/*.js",
+    "prepare": "npm run build",
+    "watch": "tsc --watch"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.7.0",
+    "@types/node": "^22.0.1",
+    "@types/node-fetch": "^2.6.12",
+    "node-fetch": "^3.3.2",
+    "universal-user-agent": "^7.0.2",
+    "zod": "^3.23.0",
+    "zod-to-json-schema": "^3.24.0"
+  },
+  "devDependencies": {
+    "shx": "^0.4.0",
+    "typescript": "^5.6.3"
+  }
+}
