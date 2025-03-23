@@ -14,3 +14,30 @@ TODO:
 
 - Create a new TypeScript project and set up the necessary dependencies in the package.json file.
 - Write the MCP server code to handle requests and interact with the Nature Remo API using the SDK.
+
+## Setup
+
+### Access Token
+To to https://home.nature.global/ .
+
+### Usage with Claude Desktop
+To use this with Claude Desktop, add the following to your `claude_desktop_config.json`:
+
+### NPX
+
+```json
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "noboru-i/nature-remo-mcp-server"
+      ],
+      "env": {
+        "ACCESS_TOKEN": "<YOUR_TOKEN>"
+      }
+    }
+  }
+}
+```
