@@ -1,5 +1,6 @@
 import { getUserAgent } from "universal-user-agent";
 import { VERSION } from "./version.js";
+import { createNatureRemoError } from "./errors.js";
 
 type RequestOptions = {
     method?: string;
@@ -51,8 +52,7 @@ export async function natureRemoRequest(
     const responseBody = await parseResponseBody(response);
 
     if (!response.ok) {
-        // throw createGitHubError(response.status, responseBody);
-        throw response;
+        throw createNatureRemoError(response.status, responseBody);
     }
 
     return responseBody;
