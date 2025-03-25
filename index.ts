@@ -9,6 +9,7 @@ import { z } from "zod";
 import { zodToJsonSchema } from 'zod-to-json-schema';
 
 import * as devices from './operations/devices.js';
+import * as appliances from './operations/appliances.js';
 
 const server = new Server({
     name: "nature-remo-mcp-server",
@@ -27,6 +28,11 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
                 description: "List devices on the home",
                 inputSchema: zodToJsonSchema(devices.ListDevicesSchema),
             },
+            {
+                name: "list_appliances",
+                description: "List appliances on the home",
+                inputSchema: zodToJsonSchema(appliances.ListAppliancesSchema),
+            },
         ]
     };
 });
@@ -40,6 +46,12 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         switch (request.params.name) {
             case "list_devices": {
                 const response = await devices.listDevices({});
+                return {
+                    content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
+                };
+            }
+            case "list_appliances": {
+                const response = await appliances.listAppliances({});
                 return {
                     content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
                 };
