@@ -10,6 +10,7 @@ import { zodToJsonSchema } from 'zod-to-json-schema';
 
 import * as devices from './operations/devices.js';
 import * as appliances from './operations/appliances.js';
+import * as appliancesTv from './operations/appliances_tv.js';
 
 const server = new Server({
     name: "nature-remo-mcp-server",
@@ -32,6 +33,11 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
                 name: "list_appliances",
                 description: "List appliances on the home",
                 inputSchema: zodToJsonSchema(appliances.ListAppliancesSchema),
+            },
+            {
+                name: "operate_tv",
+                description: "Operate a TV appliance",
+                inputSchema: zodToJsonSchema(appliancesTv.OperateTvSchema),
             },
         ]
     };
@@ -56,10 +62,18 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                     content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
                 };
             }
+            case "operate_tv": {
+                const args = appliancesTv.OperateTvSchema.parse(request.params.arguments);
+                const response = await appliancesTv.operateTv(args);
+                return {
+                    content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
+                };
+            }
             default:
                 throw new Error(`Unknown tool: ${request.params.name}`);
         }
     } catch (error) {
+        console.error("Error in request handler:", error);
         if (error instanceof z.ZodError) {
             throw new Error(`Invalid input: ${JSON.stringify(error.errors)}`);
         }

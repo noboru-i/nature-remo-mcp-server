@@ -34,22 +34,31 @@ export async function natureRemoRequest(
 ): Promise<unknown> {
     const headers: Record<string, string> = {
         "Accept": "application/json",
-        "Content-Type": "application/json",
         "User-Agent": USER_AGENT,
         ...options.headers,
     };
+
+    let body: FormData | undefined;
+
+    if (options.method === "POST" && options.body) {
+        if (options.body instanceof FormData) {
+            body = options.body;
+        }
+    }
 
     if (process.env.ACCESS_TOKEN) {
         headers["Authorization"] = `Bearer ${process.env.ACCESS_TOKEN}`;
     }
 
+    console.error(`Requesting ${url} with body: ${body}`);
     const response = await fetch(url, {
         method: options.method || "GET",
         headers,
-        body: options.body ? JSON.stringify(options.body) : undefined,
+        body: body,
     });
 
     const responseBody = await parseResponseBody(response);
+    console.error(`Response: ${response.status} ${responseBody}`);
 
     if (!response.ok) {
         throw createNatureRemoError(response.status, responseBody);
