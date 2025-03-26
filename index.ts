@@ -11,6 +11,7 @@ import { zodToJsonSchema } from 'zod-to-json-schema';
 import * as devices from './operations/devices.js';
 import * as appliances from './operations/appliances.js';
 import * as appliancesTv from './operations/appliances_tv.js';
+import * as appliancesAirconSettings from './operations/appliances_aircon_settings.js';
 
 const server = new Server({
     name: "nature-remo-mcp-server",
@@ -39,6 +40,11 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
                 description: "Operate a TV appliance",
                 inputSchema: zodToJsonSchema(appliancesTv.OperateTvSchema),
             },
+            {
+                name: "operate_aircon",
+                description: "Operate an aircon appliance",
+                inputSchema: zodToJsonSchema(appliancesAirconSettings.OperateAirconSchema),
+            },
         ]
     };
 });
@@ -65,6 +71,13 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             case "operate_tv": {
                 const args = appliancesTv.OperateTvSchema.parse(request.params.arguments);
                 const response = await appliancesTv.operateTv(args);
+                return {
+                    content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
+                };
+            }
+            case "operate_aircon": {
+                const args = appliancesAirconSettings.OperateAirconSchema.parse(request.params.arguments);
+                const response = await appliancesAirconSettings.operateAircon(args);
                 return {
                     content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
                 };
