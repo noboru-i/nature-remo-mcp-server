@@ -50,7 +50,7 @@ export async function natureRemoRequest(
         headers["Authorization"] = `Bearer ${process.env.ACCESS_TOKEN}`;
     }
 
-    console.error(`Requesting ${url} with body: ${body}`);
+    console.error(`Requesting ${url} with body: ${JSON.stringify(Object.fromEntries(body?.entries() || []))}`);
     const response = await fetch(url, {
         method: options.method || "GET",
         headers,
