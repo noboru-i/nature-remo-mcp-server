@@ -1,5 +1,7 @@
 # Nature Remo MCP server
 
+[![npm version](https://badge.fury.io/js/nature-remo-mcp-server.svg)](https://badge.fury.io/js/nature-remo-mcp-server)
+
 MCP Server for the Nature Remo API.
 
 ## Overview
