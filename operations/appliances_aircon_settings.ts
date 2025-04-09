@@ -10,12 +10,13 @@ export const OperateAirconOptions = z.object({
     operationMode: z.string().optional(),
     temperature: z.string().optional(),
     temperatureUnit: z.string().optional(),
+    times: z.number().default(1),
 });
 
 export const OperateAirconSchema = OperateAirconOptions;
 
 export async function operateAircon(params: z.infer<typeof OperateAirconSchema>) {
-    const { applianceId, airDirection, airDirectionH, airVolume, button, operationMode, temperature, temperatureUnit } = params;
+    const { applianceId, airDirection, airDirectionH, airVolume, button, operationMode, temperature, temperatureUnit, times } = params;
 
     const formData = new FormData();
     if (airDirection) formData.append("air_direction", airDirection);
@@ -26,11 +27,13 @@ export async function operateAircon(params: z.infer<typeof OperateAirconSchema>)
     if (temperature) formData.append("temperature", temperature);
     if (temperatureUnit) formData.append("temperature_unit", temperatureUnit);
 
-    return natureRemoRequest(
-        buildUrl(`https://api.nature.global/1/appliances/${applianceId}/aircon_settings`, {}),
-        {
-            method: "POST",
-            body: formData,
-        }
-    );
+    for (let i = 0; i < times; i++) {
+        await natureRemoRequest(
+            buildUrl(`https://api.nature.global/1/appliances/${applianceId}/aircon_settings`, {}),
+            {
+                method: "POST",
+                body: formData,
+            }
+        );
+    }
 }

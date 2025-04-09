@@ -73,6 +73,7 @@ This server provides the following tools:
 - **operate_tv** - Operate a TV appliance.
   - `applianceId`: Appliance id (string, required)
   - `button`: Button label (string, required)
+  - `times`: Number of times to press the button (integer, optional)
 
 - **operate_aircon** - Operate an aircon appliance.
   - `applianceId`: Appliance id (string, required)
@@ -83,6 +84,7 @@ This server provides the following tools:
   - `operationMode`: Operation mode (string, optional)
   - `temperature`: Temperature (string, optional)
   - `temperatureUnit`: Temperature unit (string, optional)
+  - `times`: Number of times to press the button (integer, optional)
 
 ## License
 
