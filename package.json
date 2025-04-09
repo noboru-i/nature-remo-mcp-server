@@ -1,6 +1,6 @@
 {
   "name": "nature-remo-mcp-server",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "MCP Server for using the Nature Remo API",
   "license": "MIT",
   "author": "noboru-i",
